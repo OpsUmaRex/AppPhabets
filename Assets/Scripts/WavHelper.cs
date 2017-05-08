@@ -8,9 +8,15 @@ public static class WavHelper {
     public static string debugFilePath;
 
 	const int HEADER_SIZE = 44;
+    private const string appPhabetsDirectory = "/AppPhabets";
+    private const string save1Directory = "/Save1";
+    private const string save2Directory = "/Save2";
+    private const string save3Directory = "/Save3";
+    private const string save4Directory = "/Save4";
+    private const string save5Directory = "/Save5";
 
-	//The functio we use to save the recorded voice
-	public static bool Save(string filename, AudioClip clip) {
+    //The functio we use to save the recorded voice
+    public static bool Save(string filename, AudioClip clip) {
 
 		if (!filename.ToLower().EndsWith(".wav")) {
 			filename += System.DateTime.Now.ToString("MM-dd-yy_hh-mm-ss") +".wav";

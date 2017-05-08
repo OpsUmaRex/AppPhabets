@@ -1,35 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
+using System;
 
-public class Settings : MonoBehaviour
+public class Settings : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     GameObject settingsPanel;
 
-    private void OnMouseOver()
+    [SerializeField]
+    Camera theCamera;
+
+    private RaycastHit2D hit;
+
+    void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        TouchRayCast();
+    }
+
+    void TouchRayCast()
+    {
+        for (int i = 0; i < Input.touchCount; ++i)
         {
-            OpenSettingsPanel();
-        }
-        else if (Input.touchCount > 0)
-        {
-            OpenSettingsPanel();
+            Vector2 test = theCamera.ScreenToWorldPoint(Input.GetTouch(i).position);
 
-            //Touch t = Input.GetTouch(0);
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
+            {
+                test = theCamera.ScreenToWorldPoint(Input.GetTouch(i).position);
 
-            //switch (t.phase)
-            //{
-            //    case TouchPhase.Began:
-            //        break;
-
-            //    case TouchPhase.Ended:
-            //        break;
-            //}
+                RaycastHit2D hit = Physics2D.Raycast(test, (Input.GetTouch(i).position));
+                if (hit.collider && hit.collider.tag == "Touchable")
+                {
+                    OpenSettingsPanel();
+                }
+            }
         }
     }
 
-    public void OpenSettingsPanel()
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        OpenSettingsPanel();
+    }
+
+    void OpenSettingsPanel()
     {
         settingsPanel.SetActive(true);
     }

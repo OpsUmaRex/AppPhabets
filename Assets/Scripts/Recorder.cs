@@ -18,31 +18,6 @@ public class Recorder : MonoBehaviour {
     void Start () 
 	{
 		state = "Not Recording";//The first state
-    //#if UNITY_ANDROID && !UNITY_EDITOR
-	    //AndroidJavaClass jc = new AndroidJavaClass("android.os.Environment");
-	    //var mstate = jc.CallStatic<System.String>("getExternalStorageState");
-	    //var mountState = jc.GetStatic<System.String>("MEDIA_REMOVED");
-		
-	    //if (mstate.Equals(mountState))
-	    //{
-
-		   // gallaryDir = "mnt/emmc/";
-
-	    //}
-	    //else
-	    //{
-		   // var jo = jc.CallStatic<AndroidJavaObject>("getExternalStorageDirectory");
-		   // var sdcardPath = jo.Call<string>("getCanonicalPath");
-
-
-		   // gallaryDir = sdcardPath ;
-	    //}
-
-     //   string filepath = Path.Combine(gallaryDir, "FileName ");
-
-     //   debugText.text = filepath;
-
-    //#endif
     }
 
     // Update is called once per frame
@@ -56,7 +31,7 @@ public class Recorder : MonoBehaviour {
 				switch (t.phase) {
 				case TouchPhase.Began://When the user start to touch 
 				    state = "Recording.....";
-					clip = Microphone.Start ("", false, 10, 44100);
+					clip = Microphone.Start ("", false, 5, 44100);
 					Debug.Log ("start to record");
 					break;
 
