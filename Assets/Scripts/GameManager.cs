@@ -6,14 +6,16 @@ public class GameManager : MonoBehaviour
 {
 	[SerializeField] Camera theCamera;
     [SerializeField] MusicPlayer musicPlayer;
+    [SerializeField] AudioSource source;
 
-	private RaycastHit2D hit;
+    private RaycastHit2D hit;
     public List<AudioClip> save1Clips = new List<AudioClip>();
     public List<AudioClip> save2Clips = new List<AudioClip>();
     public List<AudioClip> save3Clips = new List<AudioClip>();
     public List<AudioClip> save4Clips = new List<AudioClip>();
     public List<AudioClip> save5Clips = new List<AudioClip>();
 
+    public int currentIndex = 0;
     public bool hasSaved1;
     public bool hasSaved2;
     public bool hasSaved3;
@@ -23,6 +25,32 @@ public class GameManager : MonoBehaviour
     void Start()
 	{
         CheckForSaves();
+    }
+    
+    public void PlayCurrent(int saveNumber)
+    {
+        switch (saveNumber)
+        {
+            case 1:
+                source.clip = save1Clips[currentIndex];
+                break;
+            case 2:
+                source.clip = save2Clips[currentIndex];
+                break;
+            case 3:
+                source.clip = save3Clips[currentIndex];
+                break;
+            case 4:
+                source.clip = save4Clips[currentIndex];
+                break;
+            case 5:
+                source.clip = save5Clips[currentIndex];
+                break;
+            default:
+                break;
+        }
+
+        source.Play();
     }
 
     void CheckForSaves()

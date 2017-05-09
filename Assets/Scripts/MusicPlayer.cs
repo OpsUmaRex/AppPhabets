@@ -6,7 +6,6 @@ using System.Linq;
 
 public class MusicPlayer : MonoBehaviour
 {
-    public AudioSource source;
     public List<AudioClip> clips = new List<AudioClip>();
 
     [SerializeField]
@@ -114,9 +113,7 @@ public class MusicPlayer : MonoBehaviour
 		}        
 
 #endif
-
-        if (source == null) source = gameObject.AddComponent<AudioSource>();
-
+        
         //ReloadSounds();
     }
 
@@ -144,12 +141,6 @@ public class MusicPlayer : MonoBehaviour
         ReloadSounds();
     }
 
-    void PlayCurrent()
-    {
-        source.clip = clips[currentIndex];
-        source.Play();
-    }
-
     void ReloadSounds()
     {
         clips.Clear();
@@ -174,11 +165,17 @@ public class MusicPlayer : MonoBehaviour
     {
         WWW www = new WWW("file://" + path);
         print("loading " + path);
-
+       
         AudioClip clip = www.GetAudioClip(false);
-        while (!clip.isReadyToPlay)
+        while (clip.loadState != AudioDataLoadState.Loaded)
+        {
+            if (clip.loadState == AudioDataLoadState.Failed)
+            {
+                Debug.Log(clip.name + " - clip failed to load");
+            }
             yield return www;
-
+        }
+            
         print("done loading");
         clip.name = Path.GetFileName(path);
         clips.Add(clip);
