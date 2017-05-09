@@ -5,13 +5,18 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour 
 {
 	[SerializeField] Camera theCamera;
-
+    public static GameManager instance = null;
     private RaycastHit2D hit;
     public List<AudioClip> save1Clips = new List<AudioClip>();
     public List<AudioClip> save2Clips = new List<AudioClip>();
     public List<AudioClip> save3Clips = new List<AudioClip>();
     public List<AudioClip> save4Clips = new List<AudioClip>();
     public List<AudioClip> save5Clips = new List<AudioClip>();
+    public string save1Alphabet = "";
+    public string save2Alphabet = "";
+    public string save3Alphabet = "";
+    public string save4Alphabet = "";
+    public string save5Alphabet = "";
 
     public int currentIndex = 0;
     public bool hasSaved1;
@@ -22,6 +27,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
 	{
+        if (instance == null)
+            instance = this;
+
         CheckForSaves();
         MusicPlayer.SaveDataStart();
         MusicPlayer.ReloadSounds(this);
@@ -56,6 +64,7 @@ public class GameManager : MonoBehaviour
     void CheckForSaves()
     {
         MusicPlayer.GetAudioForSave("Save1");
+        MusicPlayer.ReloadSounds(this);
         hasSaved1 = (MusicPlayer.clips.Count > 0);
         if (hasSaved1)
         {
@@ -65,6 +74,7 @@ public class GameManager : MonoBehaviour
             }
         }
         MusicPlayer.GetAudioForSave("Save2");
+        MusicPlayer.ReloadSounds(this);
         hasSaved2 = (MusicPlayer.clips.Count > 0);
         if (hasSaved2)
         {
@@ -83,6 +93,7 @@ public class GameManager : MonoBehaviour
             }
         }
         MusicPlayer.GetAudioForSave("Save4");
+        MusicPlayer.ReloadSounds(this);
         hasSaved4 = (MusicPlayer.clips.Count > 0);
         if (hasSaved4)
         {
@@ -92,6 +103,7 @@ public class GameManager : MonoBehaviour
             }
         }
         MusicPlayer.GetAudioForSave("Save5");
+        MusicPlayer.ReloadSounds(this);
         hasSaved5 = (MusicPlayer.clips.Count > 0);
         if (hasSaved5)
         {
@@ -111,22 +123,22 @@ public class GameManager : MonoBehaviour
 
 	void TouchRayCast()
 	{
-		for (int i = 0; i < Input.touchCount; ++i) 
-		{
-			Vector2 test = theCamera.ScreenToWorldPoint (Input.GetTouch (i).position);
+		//for (int i = 0; i < Input.touchCount; ++i) 
+		//{
+		//	Vector2 test = theCamera.ScreenToWorldPoint (Input.GetTouch (i).position);
 
-			if (Input.GetTouch (i).phase == TouchPhase.Began) 
-			{
-				test = theCamera.ScreenToWorldPoint (Input.GetTouch (i).position);
+		//	if (Input.GetTouch (i).phase == TouchPhase.Began) 
+		//	{
+		//		test = theCamera.ScreenToWorldPoint (Input.GetTouch (i).position);
 
-				RaycastHit2D hit = Physics2D.Raycast (test, (Input.GetTouch (i).position));
-				if (hit.collider && hit.collider.tag == "Touchable") 
-				{
+		//		RaycastHit2D hit = Physics2D.Raycast (test, (Input.GetTouch (i).position));
+		//		if (hit.collider && hit.collider.tag == "Touchable") 
+		//		{
 
-					AudioSource audioSource = hit.collider.GetComponent<AudioSource> ();
-					audioSource.Play ();
-				}
-			}
-		}
+		//			AudioSource audioSource = hit.collider.GetComponent<AudioSource> ();
+		//			audioSource.Play ();
+		//		}
+		//	}
+		//}
 	}
 }

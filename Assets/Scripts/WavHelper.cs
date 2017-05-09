@@ -8,7 +8,7 @@ public static class WavHelper {
     public static string debugFilePath;
 
 	const int HEADER_SIZE = 44;
-    private const string appPhabetsDirectory = "/AppPhabets";
+    private const string appPhabetsDir = "/AppPhabets";
     private const string save1Directory = "/Save1";
     private const string save2Directory = "/Save2";
     private const string save3Directory = "/Save3";
@@ -16,18 +16,17 @@ public static class WavHelper {
     private const string save5Directory = "/Save5";
 
     //The functio we use to save the recorded voice
-    public static bool Save(string filename, AudioClip clip) {
+    public static bool Save(string filename, AudioClip clip, string saveDirectory) {
 
 		if (!filename.ToLower().EndsWith(".wav")) {
-			filename += System.DateTime.Now.ToString("MM-dd-yy_hh-mm-ss") +".wav";
-		}
+			filename += ".wav"; //System.DateTime.Now.ToString("MM-dd-yy_hh-mm-ss") + ".wav";
+        }
 
 	
 		string gallaryDir = "";
 
 
-    #if UNITY_ANDROID && !UNITY_EDITOR
-        string appDirectory = "/AppPhabets";
+#if UNITY_ANDROID && !UNITY_EDITOR
         string appDirectoryPath = "";
 		AndroidJavaClass jc = new AndroidJavaClass("android.os.Environment");
 		var state = jc.CallStatic<System.String>("getExternalStorageState");
@@ -47,17 +46,17 @@ public static class WavHelper {
 
 			gallaryDir = sdcardPath ;
 
-            appDirectoryPath = gallaryDir + appDirectory;
+            appDirectoryPath = gallaryDir + appPhabetsDir;
 
             if (Directory.Exists(appDirectoryPath) == false)
             {
                 Directory.CreateDirectory(appDirectoryPath);
             }
 
-            gallaryDir = appDirectoryPath;
+            gallaryDir = appDirectoryPath + saveDirectory;
 		}        
 
-    #endif
+#endif
 
         string filepath =Path.Combine(gallaryDir, filename);
 

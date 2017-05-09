@@ -49,10 +49,10 @@ public static class MusicPlayer
     {
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-        static string appDirectoryPath = "";
-		static AndroidJavaClass jc = new AndroidJavaClass("android.os.Environment");
-		static var state = jc.CallStatic<System.String>("getExternalStorageState");
-		static var mountState = jc.GetStatic<System.String>("MEDIA_REMOVED");
+        string appDirectoryPath = "";
+		AndroidJavaClass jc = new AndroidJavaClass("android.os.Environment");
+		var state = jc.CallStatic<System.String>("getExternalStorageState");
+		var mountState = jc.GetStatic<System.String>("MEDIA_REMOVED");
 		
 		if (state.Equals(mountState))
 		{
@@ -62,8 +62,8 @@ public static class MusicPlayer
 		}
 		else
 		{
-			static var jo = jc.CallStatic<AndroidJavaObject>("getExternalStorageDirectory");
-			static var sdcardPath = jo.Call<string>("getCanonicalPath");
+			var jo = jc.CallStatic<AndroidJavaObject>("getExternalStorageDirectory");
+			var sdcardPath = jo.Call<string>("getCanonicalPath");
 
 
 			gallaryDir = sdcardPath;
@@ -145,6 +145,14 @@ public static class MusicPlayer
 
     }
 
+    public static void DeleteSaveData(string saveName)
+    {
+        GetAudioForSave(saveName);
+        if (Directory.Exists(gallaryDir)) { Directory.Delete(gallaryDir, true); }
+        Directory.CreateDirectory(gallaryDir);
+    }
+
+
     public static void ReloadSounds(MonoBehaviour instance)
     {
         clips.Clear();
@@ -176,6 +184,7 @@ public static class MusicPlayer
             if (clip.loadState == AudioDataLoadState.Failed)
             {
                 Debug.Log(clip.name + " - clip failed to load");
+                break;
             }
             yield return www;
         }

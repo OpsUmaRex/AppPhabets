@@ -15,7 +15,8 @@ public class Settings : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        TouchRayCast();
+        if (Input.touchCount > 0)
+            TouchRayCast();
     }
 
     void TouchRayCast()
