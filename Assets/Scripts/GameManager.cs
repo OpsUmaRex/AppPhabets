@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour 
 {
 	[SerializeField] Camera theCamera;
-    [SerializeField] MusicPlayer musicPlayer;
-    [SerializeField] AudioSource source;
 
     private RaycastHit2D hit;
     public List<AudioClip> save1Clips = new List<AudioClip>();
@@ -25,6 +23,8 @@ public class GameManager : MonoBehaviour
     void Start()
 	{
         CheckForSaves();
+        MusicPlayer.SaveDataStart();
+        MusicPlayer.ReloadSounds(this);
     }
     
     public void PlayCurrent(int saveNumber)
@@ -32,70 +32,70 @@ public class GameManager : MonoBehaviour
         switch (saveNumber)
         {
             case 1:
-                source.clip = save1Clips[currentIndex];
+                MusicPlayer.source.clip = save1Clips[currentIndex];
                 break;
             case 2:
-                source.clip = save2Clips[currentIndex];
+                MusicPlayer.source.clip = save2Clips[currentIndex];
                 break;
             case 3:
-                source.clip = save3Clips[currentIndex];
+                MusicPlayer.source.clip = save3Clips[currentIndex];
                 break;
             case 4:
-                source.clip = save4Clips[currentIndex];
+                MusicPlayer.source.clip = save4Clips[currentIndex];
                 break;
             case 5:
-                source.clip = save5Clips[currentIndex];
+                MusicPlayer.source.clip = save5Clips[currentIndex];
                 break;
             default:
                 break;
         }
 
-        source.Play();
+        MusicPlayer.source.Play();
     }
 
     void CheckForSaves()
     {
-        musicPlayer.GetAudioForSave("Save1");
-        hasSaved1 = (musicPlayer.clips.Count > 0);
+        MusicPlayer.GetAudioForSave("Save1");
+        hasSaved1 = (MusicPlayer.clips.Count > 0);
         if (hasSaved1)
         {
-            foreach (AudioClip clip in musicPlayer.clips)
+            foreach (AudioClip clip in MusicPlayer.clips)
             {
                 save1Clips.Add(clip);
             }
         }
-        musicPlayer.GetAudioForSave("Save2");
-        hasSaved2 = (musicPlayer.clips.Count > 0);
+        MusicPlayer.GetAudioForSave("Save2");
+        hasSaved2 = (MusicPlayer.clips.Count > 0);
         if (hasSaved2)
         {
-            foreach (AudioClip clip in musicPlayer.clips)
+            foreach (AudioClip clip in MusicPlayer.clips)
             {
                 save2Clips.Add(clip);
             }
         }
-        musicPlayer.GetAudioForSave("Save3");
-        hasSaved3 = (musicPlayer.clips.Count > 0);
+        MusicPlayer.GetAudioForSave("Save3");
+        hasSaved3 = (MusicPlayer.clips.Count > 0);
         if (hasSaved3)
         {
-            foreach (AudioClip clip in musicPlayer.clips)
+            foreach (AudioClip clip in MusicPlayer.clips)
             {
                 save3Clips.Add(clip);
             }
         }
-        musicPlayer.GetAudioForSave("Save4");
-        hasSaved4 = (musicPlayer.clips.Count > 0);
+        MusicPlayer.GetAudioForSave("Save4");
+        hasSaved4 = (MusicPlayer.clips.Count > 0);
         if (hasSaved4)
         {
-            foreach (AudioClip clip in musicPlayer.clips)
+            foreach (AudioClip clip in MusicPlayer.clips)
             {
                 save4Clips.Add(clip);
             }
         }
-        musicPlayer.GetAudioForSave("Save5");
-        hasSaved5 = (musicPlayer.clips.Count > 0);
+        MusicPlayer.GetAudioForSave("Save5");
+        hasSaved5 = (MusicPlayer.clips.Count > 0);
         if (hasSaved5)
         {
-            foreach (AudioClip clip in musicPlayer.clips)
+            foreach (AudioClip clip in MusicPlayer.clips)
             {
                 save5Clips.Add(clip);
             }
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 				test = theCamera.ScreenToWorldPoint (Input.GetTouch (i).position);
 
 				RaycastHit2D hit = Physics2D.Raycast (test, (Input.GetTouch (i).position));
-				if (hit.collider && hit.collider.tag == "Letter") 
+				if (hit.collider && hit.collider.tag == "Touchable") 
 				{
 
 					AudioSource audioSource = hit.collider.GetComponent<AudioSource> ();
