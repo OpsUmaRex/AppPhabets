@@ -21,12 +21,11 @@ public class RecordPanelController : MonoBehaviour
     Text letterText;
 
     List<Sprite> referenceList = new List<Sprite>();
-    GameManager gameManager;
     AudioClip clip;
 
 	void Awake ()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
 	}
 
     void Update()
@@ -36,8 +35,6 @@ public class RecordPanelController : MonoBehaviour
 
     List<Sprite> DetermineWhichAlphabet(List<AudioClip> clips)
     {
-        saveInfoText.text = clips[0].name;
-        letterText.text = foodLetters[0].name;
         List<Sprite> returnList = new List<Sprite>();
         if (clips[0] != null)
         {
@@ -54,32 +51,73 @@ public class RecordPanelController : MonoBehaviour
 
     public void UpdateRecordImage()
     {
-        recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+        recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+    }
+
+    public void UpdateInfo()
+    {
+        letterText.text = foodLetters[0].name;
+        switch (whichSaveNumber)
+        {
+            case 1:
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save1Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save1Clips[0].name;
+                break;
+            case 2:
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save2Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save2Clips[0].name;
+                break;
+            case 3:
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save3Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save3Clips[0].name;
+                break;
+            case 4:
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save4Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save4Clips[0].name;
+                break;
+            case 5:
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save5Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save5Clips[0].name;
+                break;
+            default:
+                break;
+        }
     }
 	
     void OnEnable()
     {
+        letterText.text = foodLetters[0].name;
         switch (whichSaveNumber)
         {
             case 1:
-                referenceList = DetermineWhichAlphabet(gameManager.save1Clips);
-                recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save1Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save1Clips[0].name;
                 break;
             case 2:
-                referenceList = DetermineWhichAlphabet(gameManager.save2Clips);
-                recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save2Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save2Clips[0].name;
                 break;
             case 3:
-                referenceList = DetermineWhichAlphabet(gameManager.save3Clips);
-                recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save3Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save3Clips[0].name;
                 break;
             case 4:
-                referenceList = DetermineWhichAlphabet(gameManager.save4Clips);
-                recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save4Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save4Clips[0].name;
                 break;
             case 5:
-                referenceList = DetermineWhichAlphabet(gameManager.save5Clips);
-                recordingIndicator.sprite = referenceList[gameManager.currentIndex];
+                referenceList = DetermineWhichAlphabet(GameManager.instance.save5Clips);
+                recordingIndicator.sprite = referenceList[GameManager.instance.currentIndex];
+                saveInfoText.text = GameManager.instance.save5Clips[0].name;
                 break;
             default:
                 break;
