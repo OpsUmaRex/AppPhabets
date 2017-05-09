@@ -1,21 +1,84 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour 
 {
 	[SerializeField] Camera theCamera;
+    [SerializeField] MusicPlayer musicPlayer;
 
 	private RaycastHit2D hit;
+    public List<AudioClip> save1Clips = new List<AudioClip>();
+    public List<AudioClip> save2Clips = new List<AudioClip>();
+    public List<AudioClip> save3Clips = new List<AudioClip>();
+    public List<AudioClip> save4Clips = new List<AudioClip>();
+    public List<AudioClip> save5Clips = new List<AudioClip>();
 
-	void Start()
+    public bool hasSaved1;
+    public bool hasSaved2;
+    public bool hasSaved3;
+    public bool hasSaved4;
+    public bool hasSaved5;
+
+    void Start()
 	{
-		
-	}
+        CheckForSaves();
+    }
+
+    void CheckForSaves()
+    {
+        musicPlayer.GetAudioForSave("Save1");
+        hasSaved1 = (musicPlayer.clips.Count > 0);
+        if (hasSaved1)
+        {
+            foreach (AudioClip clip in musicPlayer.clips)
+            {
+                save1Clips.Add(clip);
+            }
+        }
+        musicPlayer.GetAudioForSave("Save2");
+        hasSaved2 = (musicPlayer.clips.Count > 0);
+        if (hasSaved2)
+        {
+            foreach (AudioClip clip in musicPlayer.clips)
+            {
+                save2Clips.Add(clip);
+            }
+        }
+        musicPlayer.GetAudioForSave("Save3");
+        hasSaved3 = (musicPlayer.clips.Count > 0);
+        if (hasSaved3)
+        {
+            foreach (AudioClip clip in musicPlayer.clips)
+            {
+                save3Clips.Add(clip);
+            }
+        }
+        musicPlayer.GetAudioForSave("Save4");
+        hasSaved4 = (musicPlayer.clips.Count > 0);
+        if (hasSaved4)
+        {
+            foreach (AudioClip clip in musicPlayer.clips)
+            {
+                save4Clips.Add(clip);
+            }
+        }
+        musicPlayer.GetAudioForSave("Save5");
+        hasSaved5 = (musicPlayer.clips.Count > 0);
+        if (hasSaved5)
+        {
+            foreach (AudioClip clip in musicPlayer.clips)
+            {
+                save5Clips.Add(clip);
+            }
+        }
+    }
 
 	// Update is called once per frame
 	void Update () 
 	{
-		TouchRayCast ();
+        if(Input.touchCount > 0)
+		    TouchRayCast ();
 	}
 
 	void TouchRayCast()

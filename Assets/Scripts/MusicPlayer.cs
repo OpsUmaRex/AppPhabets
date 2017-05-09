@@ -117,7 +117,7 @@ public class MusicPlayer : MonoBehaviour
 
         if (source == null) source = gameObject.AddComponent<AudioSource>();
 
-        ReloadSounds();
+        //ReloadSounds();
     }
 
     public void GetAudioForSave(string saveName)
