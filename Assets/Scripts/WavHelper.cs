@@ -26,7 +26,9 @@ public static class WavHelper {
 		string gallaryDir = "";
 
 
-		#if UNITY_ANDROID && !UNITY_EDITOR
+    #if UNITY_ANDROID && !UNITY_EDITOR
+        string appDirectory = "/AppPhabets";
+        string appDirectoryPath = "";
 		AndroidJavaClass jc = new AndroidJavaClass("android.os.Environment");
 		var state = jc.CallStatic<System.String>("getExternalStorageState");
 		var mountState = jc.GetStatic<System.String>("MEDIA_REMOVED");
@@ -44,11 +46,20 @@ public static class WavHelper {
 
 
 			gallaryDir = sdcardPath ;
+
+            appDirectoryPath = gallaryDir + appDirectory;
+
+            if (Directory.Exists(appDirectoryPath) == false)
+            {
+                Directory.CreateDirectory(appDirectoryPath);
+            }
+
+            gallaryDir = appDirectoryPath;
 		}        
 
-		#endif
+    #endif
 
-		string filepath=Path.Combine(gallaryDir, filename);
+        string filepath =Path.Combine(gallaryDir, filename);
 
         debugFilePath = filepath;
 

@@ -15,7 +15,8 @@ public class SceneChangeScript : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        TouchRayCast();
+        if (Input.touchCount > 0)
+            TouchRayCast();
     }
 
     void TouchRayCast()
@@ -44,6 +45,7 @@ public class SceneChangeScript : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("clicked");
         NextScene();
     }
 }
